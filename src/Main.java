@@ -31,11 +31,10 @@ public class Main
                 System.out.println("\t1. 시스템 연결\t\t\t\t\t2.전체 직원 정보 조회\n");
                 System.out.println("\t3. 새로운 직원 정보 입력\t\t\t4. 직원 정보 삭제 \n");
                 System.out.println("\t5. 직원 정보 수정\t\t\t\t\t6. 전체 상품 정보 조회\n");
-                System.out.println("\t7. 새로운 상품 정보 입력\t\t\t8. 상품 정보 입력 \n");
-                System.out.println("\t9. 상품 정부 수정 \t\t\t\t10. 상품 정보 삭제\n");
-                System.out.println("\t11. 전체 지점 검색 \t\t\t\t12. 지점 정보 입력\n");
-                System.out.println("\t13. 지점 정보 수정 \t\t\t\t14. 지점 정보 삭제\n");
-                System.out.println("\t15. 지점 근무자 검색 \t\t\n");
+                System.out.println("\t7. 새로운 상품 정보 입력\t\t\t8. 상품 정부 수정 \n");
+                System.out.println("\t9. 상품 정보 삭제\t\t\t\t\t10. 전체 지점 검색\n");
+                System.out.println("\t11. 지점 정보 입력 \t\t\t\t12. 지점 정보 수정\n");
+                System.out.println("\t13. 지점 정보 삭제 \t\t\t\t14. 지점 근무자 검색\n");
                 System.out.println("\n\n\t0. 종료");
                 System.out.println("---------------------------------------------------------------------------------------------\n");
 

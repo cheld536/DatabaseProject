@@ -1,23 +1,13 @@
 import java.sql.*;
 import java.util.Scanner;
 
-/*database mysql Homework #8
- * 학과 : 소프트웨어
- * 이름 : 김윤희
- * 학번 : 2018038014
- * 학년 : 3학년
- * 프로젝트명 : 편의점 관리 시스템
- * */
-
-
-
 public class Main
 {
     public static void main(String args[])
     {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con=DriverManager.getConnection(
+            Connection con= DriverManager.getConnection(
                     "jdbc:mysql://192.168.36.3:4567/madang", "yunhee","1234");       // mysql madang databases 연결
             Statement stmt=con.createStatement();                                                     // 쿼리문 생성을 위한 객체
             ResultSet rs=stmt.executeQuery("SELECT * FROM Book");                                 // 쿼리문을 담는 객체
@@ -35,14 +25,20 @@ public class Main
 
             /*메뉴 생성*/
             do{
-                System.out.println("--------------------------------------------------------------");
-                System.out.println("\n\t 사용하고자 하는 메뉴의 번호를 골라주세요 \n");
-                System.out.println("\t1. 북 테이블 데이터 삽입\n");
-                System.out.println("\t2. 북 테이블 데이터 삭제\n");
-                System.out.println("\t3. 북 테이블 데이터 검색\n");
-                System.out.println("\t4. 북 테이블 전체 데이터 검색\n");
-                System.out.println("\t5. 프로그램 종료\n");
-                System.out.println("--------------------------------------------------------------\n");
+                System.out.println("\t안녕하세요. 충대 편의점 관리 시스템 입니다.\n");
+                System.out.println("---------------------------------------------------------------------------------------------");
+                System.out.println("\n\t\t 사용하고자 하는 메뉴의 번호를 골라주세요! \n");
+                System.out.println("\t1. 시스템 연결\t\t\t\t\t2.전체 직원 정보 조회\n");
+                System.out.println("\t3. 새로운 직원 정보 입력\t\t\t4. 직원 정보 삭제 \n");
+                System.out.println("\t5. 직원 정보 수정\t\t\t\t\t6. 전체 상품 정보 조회\n");
+                System.out.println("\t7. 새로운 상품 정보 입력\t\t\t8. 상품 정보 입력 \n");
+                System.out.println("\t9. 상품 정부 수정 \t\t\t\t10. 상품 정보 삭제\n");
+                System.out.println("\t11. 전체 지점 검색 \t\t\t\t12. 지점 정보 입력\n");
+                System.out.println("\t13. 지점 정보 수정 \t\t\t\t14. 지점 정보 삭제\n");
+                System.out.println("\t15. 지점 근무자 검색 \t\t\n");
+                System.out.println("\n\n\t0. 종료");
+                System.out.println("---------------------------------------------------------------------------------------------\n");
+
                 menunumber_int = scan.nextInt();
 
                 if(menunumber_int==1){              // 데이터 삽입
@@ -170,4 +166,3 @@ public class Main
 
     }
 }
-

@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Main
@@ -401,7 +402,51 @@ public class Main
 
         }catch(Exception e){ System.out.println(e);}
     }
-    public static void New_Goods(){}
+    public static void New_Goods(){
+        /*table 데이터*/
+        Integer goodscode;
+        String manufacturecompany;
+        String classification;
+        String Prace;
+        Integer Availablestock;
+        String expirationdate;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://192.168.36.3:4567/STORE", "yunhee", "1234");  // 연결을 위한 con 변수
+            String sql = "insert into empolyee values(0,?,?,?,?,?,?)";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            Scanner scan = new Scanner(System.in);
+            System.out.println("추가 할 상품의 제조 회사를 입력하세요.(필수) : ");
+            manufacturecompany = scan.nextLine();
+            System.out.println("추가 할 상품의 분류를 입력하세요.(필수) : ");
+            classification = scan.nextLine();
+            System.out.println("추가 할 상품의 가격를 입력하세요.(필수) : ");
+            Prace = scan.nextLine();
+            System.out.println("추가 할 상품의 제고를 입력하세요. : ");
+            Availablestock = Integer.valueOf(scan.nextLine());
+            System.out.println("추가 할 상품의 유통기한을 입력하세요. 입력하세요.(YYYY-DD-MM) : ");
+            expirationdate = scan.nextLine();
+
+
+
+            stmt.setString(1, manufacturecompany);
+            stmt.setString(2, classification);
+            stmt.setString(3, Prace);
+            stmt.setInt(4, Availablestock);
+            stmt.setString(5, expirationdate);
+
+
+
+            int result = stmt.executeUpdate();
+            if(result ==1) System.out.println("Inset 저장 성공!");
+            else System.out.println("저장 실패");
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
     public static void Delete_Goods(){
         String id;      // 삭제할 id 값
 

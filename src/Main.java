@@ -23,9 +23,7 @@ public class Main
             do{
 
                 System.out.println("---------------------------------------------------------------------------------------------");
-                System.out.println("\n\t\t 사용하고자 하는 메뉴의 번호를 골라주세요! \n");
-                System.out.println("\t\t 3수정 기능은 추후 업데이트 할 예정입니다.\n");            // 요구사항은 입력 조회 삭제로 구현
-
+                System.out.println("\t\t 수정 기능은 추후 업데이트 할 예정입니다.\n");            // 요구사항은 입력 조회 삭제로 구현
                 System.out.println("\t1. 시스템 연결\t\t\t\t\t2.전체 직원 정보 조회\n");
                 System.out.println("\t3. 새로운 직원 정보 입력\t\t\t4. 직원 정보 삭제 \n");
                 System.out.println("\t5. 직원 정보 수정\t\t\t\t\t6. 전체 상품 정보 조회\n");
@@ -35,7 +33,7 @@ public class Main
                 System.out.println("\t13. 지점 정보 삭제 \t\t\t\t14. 지점 근무자 검색\n");
                 System.out.println("\n\n\t0. 종료");
                 System.out.println("---------------------------------------------------------------------------------------------\n");
-
+                System.out.println("원하는 메뉴를 골라주세요. !");
                 menunumber_int = scan.nextInt();
 
                 if(menunumber_int==1){              // 연결
@@ -75,7 +73,7 @@ public class Main
                     Delete_Branch();
                 }       // 지점 정보 삭제
                 else if(menunumber_int==14){
-
+                    branch_empolyee();
                 }       // 지점 근무자 검색
                 else if (menunumber_int ==0 ) {     // 종료
                     System.out.println("\n 프로그램을 종료합니다 \n");
@@ -283,7 +281,39 @@ public class Main
 
         }catch(Exception e){ System.out.println(e);}
     }
+    public static void branch_empolyee(){
+        String branchcode;
 
+        try {
+            Scanner scan = new Scanner(System.in);
+            System.out.println("검색할 지점의 아이디를 입력하세요 : ");
+
+            branchcode = scan.nextLine();
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://192.168.36.3:4567/STORE", "yunhee", "1234");  // 연결을 위한 con 변수
+
+            Statement stmt=con.createStatement();
+            ResultSet rs=stmt.executeQuery("SELECT \n" +
+                    "    branch.branchname,\n" +
+                    "    empolyee.ecode,\n" +
+                    "    empolyee.ename,\n" +
+                    "    empolyee.eGender,\n" +
+                    "    empolyee.age,\n" +
+                    "    empolyee.Phonenumber,\n" +
+                    "    empolyee.worksdate\n" +
+                    "FROM branch JOIN empolyee\n" +
+                    "ON empolyee.branchcode = branch.branchcode\n" +
+                    "AND branch.branchcode = "+branchcode+";");
+
+            while(rs.next())
+                System.out.println(rs.getString(1)+" "+rs.getInt(2)+ " "+rs.getString(3) + " " +rs.getString(4)+rs.getInt(5)+rs.getString(6)+rs.getString(7));
+            con.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
     /*상품 정보*/
     public static void Search_all_Goods(){
         try{

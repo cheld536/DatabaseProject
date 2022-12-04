@@ -162,6 +162,27 @@ public class Main
         } catch (Exception e) {
             System.out.println(e);
         }
-
     }
+
+    /*연결 */
+    public static void connection(){}
+
+    /*직원 정보*/
+    public static void Search_data_all_employee(){}
+    public static void New_employee(){}
+    public static void Delete_employee(){}
+    public static void Modify_employee(){}
+
+    /*지점 정보*/
+    public static void New_Branch(){}
+    public static void Delete_Branch(){}
+    public static void Modify_Branch(){}
+    public static void Search_all_Branch(){}
+
+    /*상품 정보*/
+    public static void Search_all_Goods(){}
+    public static void New_Goods(){}
+    public static void Delete_Goods(){}
+    public static void Modify_Goods(){}
+
 }

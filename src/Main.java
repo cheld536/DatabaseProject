@@ -36,8 +36,7 @@ public class Main
                 menunumber_int = scan.nextInt();
 
                 if(menunumber_int==1){              // 데이터 삽입
-                    Insert_data();
-                    Select_All();
+                    connection();
                 }else if(menunumber_int==2){        // 데이터 삭제
                     Delete_data();
                     Select_All();
@@ -165,7 +164,7 @@ public class Main
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection(
-                    "jdbc:mysql://192.168.36.3:4567/madang", "yunhee","1234");       // mysql madang databases 연결
+                    "jdbc:mysql://192.168.36.3:4567/STORE", "yunhee","1234");       // mysql madang databases 연결
             Statement stmt=con.createStatement();                                                     // 쿼리문 생성을 위한 객체
 
             /* Mading database Book table*/

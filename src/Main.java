@@ -17,13 +17,15 @@ public class Main
             Integer menunumber_int= 0;                  // 메뉴번호 선택을 위한 menunumber_int 선언 Integer로 선언하여 SQL과 연동하여 처리가 유용함
             // 0으로 초기화
 
-            System.out.println("\t안녕하세요. 충대 편의점 관리 시스템 입니다.\n");
+            System.out.println("\n\n\n\n\t안녕하세요. 충대 편의점 관리 시스템 입니다.\n");
 
             /*메뉴 생성*/
             do{
 
                 System.out.println("---------------------------------------------------------------------------------------------");
                 System.out.println("\n\t\t 사용하고자 하는 메뉴의 번호를 골라주세요! \n");
+                System.out.println("\t\t 3수정 기능은 추후 업데이트 할 예정입니다.\n");            // 요구사항은 입력 조회 삭제로 구현
+
                 System.out.println("\t1. 시스템 연결\t\t\t\t\t2.전체 직원 정보 조회\n");
                 System.out.println("\t3. 새로운 직원 정보 입력\t\t\t4. 직원 정보 삭제 \n");
                 System.out.println("\t5. 직원 정보 수정\t\t\t\t\t6. 전체 상품 정보 조회\n");
@@ -85,109 +87,7 @@ public class Main
 
         }catch(Exception e){ System.out.println(e);}
     }
-    /*데이터 삽입 함수 생성 */
-    public static void Insert_data() {
 
-        /*table 데이터*/
-        String Book_id;
-        String bookname;
-        String publisher;
-        String price;
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://192.168.36.3:4567/madang", "yunhee", "1234");  // 연결을 위한 con 변수
-            String sql = "insert into Book values(?,?,?,?)";
-            PreparedStatement stmt = con.prepareStatement(sql);
-
-            Scanner scan = new Scanner(System.in);
-            System.out.println("추가 할 책 Book_id를 입력하세요 : ");
-            Book_id = scan.nextLine();
-            System.out.println("추가 할 책 Book_name을 입력하세요 : ");
-            bookname = scan.nextLine();
-            System.out.println("추가 할 책 publisher 입력하세요 : ");
-            publisher = scan.nextLine();
-            System.out.println("추가 할 책 price를 입력하세요 : ");
-            price = scan.nextLine();
-
-            stmt.setInt(1, Integer.parseInt(Book_id));
-            stmt.setString(2, bookname);
-            stmt.setString(3, publisher);
-            stmt.setString(4, price);
-
-            int result = stmt.executeUpdate();
-            if(result ==1) System.out.println("Inset 저장 성공!");
-            else System.out.println("저장 실패");
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-    /*검색에 필요한 Search 함수 생성 */
-    public static void Search_data(){
-
-        String name;
-
-        try {
-            Scanner scan = new Scanner(System.in);
-            System.out.println("검색할 책 이름을 입력하세요 : ");
-
-            name = scan.nextLine();
-
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://192.168.36.3:4567/madang", "yunhee", "1234");  // 연결을 위한 con 변수
-
-            Statement stmt=con.createStatement();
-            ResultSet rs=stmt.executeQuery("SELECT * FROM Book WHERE bookname LIKE '%"+name+"%'");
-
-            while(rs.next())
-                System.out.println(rs.getInt(1)+" "+rs.getString(2)+ " "+rs.getString(3) + " " +rs.getInt(4));
-            con.close();
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-    /*삭제에 필요한 delete 함수 생성 */
-    public static void Delete_data() {
-
-        String id;      // 삭제할 책의 id 값
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://192.168.36.3:4567/madang", "yunhee", "1234");  // 연결을 위한 con 변수
-
-            String sql = "delete from Book where bookid=?";                                // Book id로 데이터 삭제
-            PreparedStatement stmt = con.prepareStatement(sql);                            // stmt sql 객체 생성
-
-            Scanner scan = new Scanner(System.in);
-            System.out.println("삭제 책 id를 입력하세요 : ");                                  // 삭제 할 책의 id 입력
-            id = scan.nextLine();
-            stmt.setInt(1, Integer.parseInt(id));
-            stmt.executeUpdate();
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-    /*Book 테이블 전체 상태 확인하기 위한 함수 생성*/
-    public static void Select_All() {
-
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://192.168.36.3:4567/madang", "yunhee", "1234");  // 연결을 위한 con 변수
-
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Book");             // sql 문 생성
-
-            while(rs.next())
-                System.out.println(rs.getInt(1)+" "+rs.getString(2)+ " "+rs.getString(3) + " " +rs.getInt(4));
-            con.close();
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
 
     /*연결 */
     public static void connection(){
@@ -315,7 +215,7 @@ public class Main
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://192.168.36.3:4567/STORE", "yunhee", "1234");  // 연결을 위한 con 변수
-            String sql = "insert into empolyee values(0,?,?,?,?)";
+            String sql = "insert into branch values(0,?,?,?,?)";
             PreparedStatement stmt = con.prepareStatement(sql);
 
             Scanner scan = new Scanner(System.in);
@@ -414,7 +314,7 @@ public class Main
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://192.168.36.3:4567/STORE", "yunhee", "1234");  // 연결을 위한 con 변수
-            String sql = "insert into empolyee values(0,?,?,?,?,?,?)";
+            String sql = "insert into goods values(0,?,?,?,?,?,?)";
             PreparedStatement stmt = con.prepareStatement(sql);
 
             Scanner scan = new Scanner(System.in);

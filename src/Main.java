@@ -8,19 +8,19 @@ public class Main
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection(
-                    "jdbc:mysql://192.168.36.3:4567/STORE", "yunhee","1234");       // mysql madang databases 연결
+                    "jdbc:mysql://192.168.36.3:4567/STORE", "yunhee","1234");       // mysql STORE databases 연결
             Statement stmt=con.createStatement();                                                     // 쿼리문 생성을 위한 객체
-
 
             /* Mading database Book table*/
             Scanner scan = new Scanner(System.in);      // 검색을 위한 객체 생성
             Integer menunumber_int= 0;                  // 메뉴번호 선택을 위한 menunumber_int 선언 Integer로 선언하여 SQL과 연동하여 처리가 유용함
             // 0으로 초기화
 
+            System.out.println("\t안녕하세요. 충대 편의점 관리 시스템 입니다.\n");
 
             /*메뉴 생성*/
             do{
-                System.out.println("\t안녕하세요. 충대 편의점 관리 시스템 입니다.\n");
+
                 System.out.println("---------------------------------------------------------------------------------------------");
                 System.out.println("\n\t\t 사용하고자 하는 메뉴의 번호를 골라주세요! \n");
                 System.out.println("\t1. 시스템 연결\t\t\t\t\t2.전체 직원 정보 조회\n");
@@ -35,16 +35,46 @@ public class Main
 
                 menunumber_int = scan.nextInt();
 
-                if(menunumber_int==1){              // 데이터 삽입
+                if(menunumber_int==1){              // 연결
                     connection();
-                }else if(menunumber_int==2){        // 데이터 삭제
-                    Delete_data();
-                    Select_All();
-                }else if(menunumber_int==3){        // 데이터 검색
-                    Search_data();
-                }else if (menunumber_int==4){       // 전체 데이터 확인
-                    Select_All();
-                } else if (menunumber_int ==0 ) {   // 종료
+                }else if(menunumber_int==2){        // 전체 직원 정보 탐색
+                    Search_data_all_employee();
+                }else if(menunumber_int==3){        //새로운 직원 정보 입력
+                    New_employee();
+                }else if (menunumber_int==4){       // 직원 정보 삭제
+                    Delete_employee();
+                }
+                else if(menunumber_int==5){
+                    Modify_employee();
+                }        // 직원 정보 수정
+                else if(menunumber_int==6){
+                    Search_all_Goods();
+                }        // 전체 상품 정보 검색
+                else if(menunumber_int==7){
+                    New_Goods();
+                }        // 새로운 상품 정보 입력
+                else if(menunumber_int==8){
+                    Modify_Goods();
+                }        // 상품 정보 수정
+                else if(menunumber_int==9){
+                    Delete_Goods();
+                }        // 상품 정보 삭제
+                else if(menunumber_int==10){
+                    Search_all_Branch();
+                }       // 전체 지점 검색
+                else if(menunumber_int==11){
+                    New_Branch();
+                }       // 새로운 지점 정보 입력
+                else if(menunumber_int==12){
+                    Modify_Branch();
+                }       // 지점 정보 수정
+                else if(menunumber_int==13){
+                    Delete_Branch();
+                }       // 지점 정보 삭제
+                else if(menunumber_int==14){
+
+                }       // 지점 근무자 검색
+                else if (menunumber_int ==0 ) {     // 종료
                     System.out.println("\n 프로그램을 종료합니다 \n");
                     break;
                 }
@@ -164,7 +194,7 @@ public class Main
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection(
-                    "jdbc:mysql://192.168.36.3:4567/STORE", "yunhee","1234");       // mysql madang databases 연결
+                    "jdbc:mysql://192.168.36.3:4567/STORE", "yunhee","1234");       // mysql STORE databases 연결
             Statement stmt=con.createStatement();                                                     // 쿼리문 생성을 위한 객체
 
             /* Mading database Book table*/
@@ -178,7 +208,23 @@ public class Main
 
     /*직원 정보*/
     public static void Search_data_all_employee(){
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con= DriverManager.getConnection(
+                    "jdbc:mysql://192.168.36.3:4567/STORE", "yunhee","1234");       // mysql madang databases 연결
+            Statement stmt=con.createStatement();                                                     // 쿼리문 생성을 위한 객체
 
+            /* Mading database Book table*/
+            Scanner scan = new Scanner(System.in);      // 검색을 위한 객체 생성
+
+            ResultSet rs=stmt.executeQuery("SELECT * FROM empolyee");
+
+            while(rs.next())
+                System.out.println(rs.getInt(1)+" "+rs.getString(2)+ " "+rs.getString(3) + " " +rs.getInt(4)+" "+rs.getString(5)+
+                        " "+rs.getInt(6)+" "+rs.getDate(7)+" "+rs.getInt(8));
+            con.close();
+
+        }catch(Exception e){ System.out.println(e);}
     }
     public static void New_employee(){
         /*table 데이터*/
@@ -194,7 +240,7 @@ public class Main
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://192.168.36.3:4567/STORE", "yunhee", "1234");  // 연결을 위한 con 변수
-            String sql = "insert into empolyee values(?,?,?,?,?,?,?)";
+            String sql = "insert into empolyee values(0,?,?,?,?,?,?,?)";
             PreparedStatement stmt = con.prepareStatement(sql);
 
             Scanner scan = new Scanner(System.in);
@@ -231,21 +277,153 @@ public class Main
             System.out.println(e);
         }
     }
-    public static void Delete_employee(){}
+    public static void Delete_employee(){
+        String id;      // 삭제할 id 값
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://192.168.36.3:4567/STORE", "yunhee", "1234");  // 연결을 위한 con 변수
+
+            String sql = "delete from empolyee where Ecode=?";                                // 직원의 id로 데이터 삭제
+            PreparedStatement stmt = con.prepareStatement(sql);                                 // stmt sql 객체 생성
+
+            Scanner scan = new Scanner(System.in);
+            System.out.println("삭제 직원 번호를 입력하세요 : ");                                  // 삭제 할 책의 id 입력
+            id = scan.nextLine();
+            stmt.setInt(1, Integer.parseInt(id));
+            stmt.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    // 수정 기능은 추후에 구현
     public static void Modify_employee(){}
 
     /*지점 정보*/
-    public static void New_Branch(){}
-    public static void Delete_Branch(){}
-    public static void Modify_Branch(){}
-    public static void Search_all_Branch(){}
+    public static void New_Branch(){
+
+        /*table 데이터*/
+        String branchcode;
+        String branchname;
+        String branchaddress;
+        String branchNumber;
+        String Managername;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://192.168.36.3:4567/STORE", "yunhee", "1234");  // 연결을 위한 con 변수
+            String sql = "insert into empolyee values(0,?,?,?,?)";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            Scanner scan = new Scanner(System.in);
+            System.out.println("추가 할 지점의 이름을 입력하세요.(필수) : ");
+            branchname = scan.nextLine();
+            System.out.println("추가 할 지점의 주소를 입력하세요.(필수) : ");
+            branchaddress = scan.nextLine();
+            System.out.println("추가 할 지점의 전화번호를 입력하세요(043-123-4567)(필수). : ");
+            branchNumber = scan.nextLine();
+            System.out.println("추가 할 지점의 메니저 이름을 입력하세요.(필수) : ");
+            Managername = scan.nextLine();
+
+
+
+            stmt.setString(1, branchname);
+            stmt.setString(2, branchaddress);
+            stmt.setString(3, branchNumber);
+            stmt.setString(4, Managername);
+
+
+
+            int result = stmt.executeUpdate();
+            if(result ==1) System.out.println("Inset 저장 성공!");
+            else System.out.println("저장 실패");
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    public static void Delete_Branch(){
+        String id;      // 삭제할 id 값
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://192.168.36.3:4567/STORE", "yunhee", "1234");  // 연결을 위한 con 변수
+
+            String sql = "delete from branch where Ecode=?";                                // 지점의 id로 데이터 삭제
+            PreparedStatement stmt = con.prepareStatement(sql);                             // stmt sql 객체 생성
+
+            Scanner scan = new Scanner(System.in);
+            System.out.println("삭제 지점 번호를 입력하세요 : ");                                  // 삭제 할 지점 id 입력
+            id = scan.nextLine();
+            stmt.setInt(1, Integer.parseInt(id));
+            stmt.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    public static void Modify_Branch(){}// 수정 기능은 추후에 구현
+    public static void Search_all_Branch(){
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con= DriverManager.getConnection(
+                    "jdbc:mysql://192.168.36.3:4567/STORE", "yunhee","1234");       // mysql STORE databases 연결
+            Statement stmt=con.createStatement();                                                     // 쿼리문 생성을 위한 객체
+
+            Scanner scan = new Scanner(System.in);      // 검색을 위한 객체 생성
+
+            ResultSet rs=stmt.executeQuery("SELECT * FROM branch");
+
+            while(rs.next())
+                System.out.println(rs.getInt(1)+" "+rs.getString(2)+ " "+rs.getString(3) + " " +rs.getString(4)+" "+rs.getString(5));
+            con.close();
+
+        }catch(Exception e){ System.out.println(e);}
+    }
 
     /*상품 정보*/
-    public static void Search_all_Goods(){}
-    public static void New_Goods(){}
-    public static void Delete_Goods(){}
-    public static void Modify_Goods(){}
+    public static void Search_all_Goods(){
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con= DriverManager.getConnection(
+                    "jdbc:mysql://192.168.36.3:4567/STORE", "yunhee","1234");       // mysql STORE databases 연결
+            Statement stmt=con.createStatement();                                                     // 쿼리문 생성을 위한 객체
 
+            Scanner scan = new Scanner(System.in);      // 검색을 위한 객체 생성
+
+            ResultSet rs=stmt.executeQuery("SELECT * FROM goods");
+
+            while(rs.next())
+                System.out.println(rs.getInt(1)+" "+rs.getString(2)+ " "+rs.getString(3) + " " +rs.getString(4)+" "+rs.getInt(5)+" "+rs.getDate(6));
+            con.close();
+
+        }catch(Exception e){ System.out.println(e);}
+    }
+    public static void New_Goods(){}
+    public static void Delete_Goods(){
+        String id;      // 삭제할 id 값
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://192.168.36.3:4567/STORE", "yunhee", "1234");  // 연결을 위한 con 변수
+
+            String sql = "delete from branch where Ecode=?";                                // 상품의 id로 데이터 삭제
+            PreparedStatement stmt = con.prepareStatement(sql);                             // stmt sql 객체 생성
+
+            Scanner scan = new Scanner(System.in);
+            System.out.println("삭제 지점 번호를 입력하세요 : ");                                  // 삭제 할 지점 id 입력
+            id = scan.nextLine();
+            stmt.setInt(1, Integer.parseInt(id));
+            stmt.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    public static void Modify_Goods(){}
+// 수정 기능은 추후에 구현
 
 
 
